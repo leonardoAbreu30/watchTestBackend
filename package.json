@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "migrate": "ts-node src/migrate.ts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,10 @@
   "homepage": "https://github.com/leonardoAbreu30/watchTestBackend#readme",
   "dependencies": {
     "@fastify/cors": "^11.0.1",
+    "@fastify/jwt": "^9.1.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^6.0.0",
+    "dotenv": "^16.5.0",
     "fastify": "^5.3.3",
     "fastify-plugin": "^5.0.1",
     "pg": "^8.16.0",

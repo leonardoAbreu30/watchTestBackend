@@ -1,23 +1,34 @@
 import { migrate } from 'postgres-migrations'
 import { Pool } from 'pg'
+import path from 'path'
+import 'dotenv/config'
 
-async function runMigrations() {
-  const dbConfig = {
-    user: 'postgres',
-    host: 'localhost',
-    database: 'watchTest',
-    password: 'postgres',
-    port: 5432,
-  }
+const runMigrations = async () => {
+    const pool = new Pool({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: parseInt(process.env.DB_PORT || '5432'),
+    })
 
-  const pool = new Pool(dbConfig)
-  const client = await pool.connect()
-  try {
-    await migrate({ client }, './migrations')
-  } finally {
-    client.release()
-    await pool.end()
-  }
+    const client = await pool.connect()
+
+    try {
+        console.log('Running migrations...')
+        const migrationsPath = path.resolve(__dirname, '../migrations')
+        await migrate({ client }, migrationsPath)
+        console.log('Migrations completed successfully')
+    } catch (err) {
+        console.error('Migration failed:', err)
+        throw err
+    } finally {
+        await client.release()
+        await pool.end()
+    }
 }
 
-runMigrations()
+runMigrations().catch((err) => {
+    console.error('Migration script failed:', err)
+    process.exit(1)
+})
