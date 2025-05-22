@@ -1,9 +1,12 @@
+import sdk from './tracing';
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import jwt from '@fastify/jwt'
 import { authRoutes } from './routes/auth.routes'
 import todoRoutes from './routes/todos'
 import 'dotenv/config'
+
+sdk.start();
 
 declare module '@fastify/jwt' {
     interface FastifyJWT {
