@@ -24,7 +24,8 @@ declare module 'fastify' {
 const server = Fastify({ logger: true })
 
 server.register(cors, { 
-  origin: process.env.CORS_ORIGIN
+  origin: process.env.CORS_ORIGIN,
+  methods: ['GET', 'POST', 'DELETE']
 })
 
 server.register(jwt, {

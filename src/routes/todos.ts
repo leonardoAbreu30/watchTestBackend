@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { query } from '../db'
+import { kafkaService } from '../services/kafka.service'
 
 export default async function (fastify: FastifyInstance) {
   fastify.addHook('onRequest', fastify.authenticate);
@@ -18,7 +19,12 @@ export default async function (fastify: FastifyInstance) {
       'INSERT INTO todos (text, user_id) VALUES ($1, $2) RETURNING *',
       [text, request.user.id]
     );
-    return rows[0];
+    
+    const newTodo = rows[0];
+    
+    await kafkaService.publishTodoCreated(newTodo, request.user.id);
+    
+    return newTodo;
   });
 
   fastify.delete<{ Params: { id: string } }>('/todos/:id', async (request, reply) => {
@@ -41,6 +47,9 @@ export default async function (fastify: FastifyInstance) {
       request.params.id,
       request.user.id
     ]);
+
+    await kafkaService.publishTodoDeleted(parseInt(request.params.id), request.user.id);
+
     return { success: true };
   });
 }
