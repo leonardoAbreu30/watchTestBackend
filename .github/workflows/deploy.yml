@@ -75,4 +75,17 @@ jobs:
             -var="db_user=${{ secrets.DB_USER }}" \
             -var="db_password=${{ secrets.DB_PASSWORD }}" \
             -var="jwt_secret=${{ secrets.JWT_SECRET }}" \
-            -var="cors_origin=${{ vars.CORS_ORIGIN }}" 
+            -var="cors_origin=${{ vars.CORS_ORIGIN }}"
+
+      - name: Get Website URL
+        if: github.ref == 'refs/heads/main'
+        working-directory: ./terraform
+        run: |
+          echo "WEBSITE_URL=$(terraform output -raw website_url)" >> $GITHUB_ENV
+          
+      - name: Display URLs
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "✨ Deployment Complete! ✨"
+          echo "Website URL: ${{ env.WEBSITE_URL }}"
+          echo "You can access your static website at the URL above." 
