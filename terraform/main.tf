@@ -68,9 +68,10 @@ resource "aws_apigatewayv2_api" "todo_api" {
   name          = "todo-api-${var.environment}"
   protocol_type = "HTTP"
   cors_configuration {
-    allow_origins = [var.cors_origin]
+    allow_origins = [coalesce(var.cors_origin, "*")]
     allow_methods = ["GET", "POST", "DELETE", "OPTIONS"]
-    allow_headers = ["*"]
+    allow_headers = ["Content-Type", "Authorization", "X-Amz-Date", "X-Api-Key", "X-Amz-Security-Token"]
+    max_age      = 300
   }
 }
 

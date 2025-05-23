@@ -44,7 +44,12 @@ variable "jwt_secret" {
 }
 
 variable "cors_origin" {
-  description = "CORS allowed origin"
+  description = "CORS allowed origin (must be a valid URL, '*', or URL pattern). Examples: https://example.com, *, https://*.example.com"
   type        = string
   default     = "*"
+
+  validation {
+    condition     = can(regex("^(\\*|https?://[\\w\\-\\.]+(:\\d+)?(/.*)?|https?://\\*\\.([\\w\\-\\.]+)(:\\d+)?(/.*)?)?$", var.cors_origin))
+    error_message = "The cors_origin must be a valid URL starting with http:// or https://, a single '*', or a valid pattern like https://*.example.com"
+  }
 } 
