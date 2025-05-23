@@ -99,4 +99,15 @@ resource "aws_lambda_permission" "apigw" {
   function_name = aws_lambda_function.todo_app.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.todo_api.execution_arn}/*/*"
+}
+
+# Add these outputs at the end of the file
+output "api_endpoint" {
+  description = "API Gateway endpoint URL"
+  value       = "${aws_apigatewayv2_api.todo_api.api_endpoint}/${aws_apigatewayv2_stage.todo_api.name}"
+}
+
+output "health_check_url" {
+  description = "Health check endpoint URL"
+  value       = "${aws_apigatewayv2_api.todo_api.api_endpoint}/${aws_apigatewayv2_stage.todo_api.name}/health"
 } 

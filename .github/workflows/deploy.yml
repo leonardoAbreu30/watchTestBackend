@@ -75,4 +75,4 @@ jobs:
             -var="db_user=${{ secrets.DB_USER }}" \
             -var="db_password=${{ secrets.DB_PASSWORD }}" \
             -var="jwt_secret=${{ secrets.JWT_SECRET }}" \
-            -var="cors_origin=${{ vars.CORS_ORIGIN }}"
+            -var="cors_origin=${{ vars.CORS_ORIGIN }}" 
