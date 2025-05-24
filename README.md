@@ -11,6 +11,11 @@ A robust Node.js backend service built with Fastify, featuring authentication, t
 - PostgreSQL database integration
 - OpenTelemetry instrumentation
 - Comprehensive test suite (unit, integration, load)
+- AWS Infrastructure
+  - S3 bucket for storage
+  - Lambda functions for serverless operations
+- Infrastructure as Code with Terraform
+- Automated deployments via GitHub Actions
 
 ## 📋 Prerequisites
 
@@ -18,6 +23,16 @@ A robust Node.js backend service built with Fastify, featuring authentication, t
 - PostgreSQL
 - Apache Kafka
 - k6 (for load testing)
+
+Optional (for containerized setup):
+- Docker Desktop
+  - Provides containerized Kafka
+  - Includes Jaeger for trace visualization
+
+For infrastructure management:
+- AWS CLI configured with appropriate credentials
+- Terraform CLI
+- GitHub account for CI/CD
 
 ## 🛠️ Installation
 
@@ -47,7 +62,13 @@ JWT_SECRET=your-secret-key
 KAFKA_BROKER=localhost:9092
 ```
 
-4. Run database migrations:
+4. Start the infrastructure (if using Docker):
+```bash
+# Start Kafka, and Jaeger
+docker compose up -d
+```
+
+5. Run database migrations:
 ```bash
 npm run migrate
 ```
@@ -182,14 +203,6 @@ DELETE /todos/:id
 Authorization: Bearer <token>
 ```
 
-### Protected Routes
-
-#### Get Current User
-```http
-GET /me
-Authorization: Bearer <token>
-```
-
 ## 🏗️ Project Structure
 
 ```
@@ -206,6 +219,11 @@ watchTestBackend/
 │   └── tracing.ts          # OpenTelemetry setup
 ├── load-tests/             # k6 load tests
 ├── migrations/             # Database migrations
+├── terraform/              # IaC for AWS resources
+│   ├── main.tf            # Main Terraform configuration
+│   ├── variables.tf       # Variable definitions
+├── .github/
+│   └── workflows/         # GitHub Actions workflows
 └── package.json
 ```
 
