@@ -217,15 +217,54 @@ watchTestBackend/
 │   ├── db.ts               # Database configuration
 │   ├── server.ts           # Server setup
 │   └── tracing.ts          # OpenTelemetry setup
+├── docs/                    # Project documentation
+│   ├── api/                # API documentation
+│   │   └── openapi.yaml    # OpenAPI/Swagger specification
+│   ├── diagrams/           # System diagrams
+│   │   ├── architecture/   # Architectural diagrams
+│   │   └── flows/         # Flow diagrams
+│   └── database/           # Database documentation
+│       └── erd.png        # Entity Relationship Diagram
 ├── load-tests/             # k6 load tests
 ├── migrations/             # Database migrations
 ├── terraform/              # IaC for AWS resources
 │   ├── main.tf            # Main Terraform configuration
-│   ├── variables.tf       # Variable definitions
+│   └── variables.tf       # Variable definitions
 ├── .github/
 │   └── workflows/         # GitHub Actions workflows
 └── package.json
 ```
+
+## 📚 Documentation
+
+### API Documentation
+
+The API is documented using OpenAPI (Swagger) specification in `docs/api/openapi.yaml`. This includes:
+- Detailed endpoint descriptions
+- Request/response schemas
+- Authentication requirements
+- Example payloads
+
+### System Architecture
+
+Located in `docs/diagrams/architecture/`:
+- High-level system architecture
+- Component interaction diagram
+
+### Flow Diagrams
+
+Found in `docs/diagrams/flows/`:
+- User authentication flows
+- Todo creation/management flows
+- Event publishing sequences
+
+### Database Documentation
+
+The `docs/database/` directory contains:
+- Entity Relationship Diagram (ERD)
+- Table relationships
+- Data model documentation
+- Index strategies
 
 ## 📊 Monitoring
 
